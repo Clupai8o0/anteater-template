@@ -3,6 +3,10 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --main-blue: #2563eb;
+  --orange-gold: #f59e0b;
+  --teal-green: #10b981;
+  --coral: #f97316;
 }
 
 @theme inline {
@@ -23,4 +27,65 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Hatch pattern background */
+.hatch-pattern {
+  background-image: linear-gradient(45deg, transparent 40%, rgba(0,0,0,.1) 40%, rgba(0,0,0,.1) 60%, transparent 60%);
+  background-size: 20px 20px;
+}
+
+/* Animation keyframes for floating elements */
+@keyframes moveUp {
+  0%, 100% { transform: translateY(0px); opacity: 0.8; }
+  50% { transform: translateY(-20px); opacity: 1; }
+}
+
+@keyframes moveDown {
+  0%, 100% { transform: translateY(0px); opacity: 0.8; }
+  50% { transform: translateY(20px); opacity: 1; }
+}
+
+@keyframes moveLeft {
+  0%, 100% { transform: translateX(0px); opacity: 0.8; }
+  50% { transform: translateX(-20px); opacity: 1; }
+}
+
+@keyframes moveRight {
+  0%, 100% { transform: translateX(0px); opacity: 0.8; }
+  50% { transform: translateX(20px); opacity: 1; }
+}
+
+@keyframes animate-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+.animate-scroll {
+  animation: animate-scroll 30s linear infinite;
+}
+
+/* Button utilities */
+.button-main-blue {
+  border-color: var(--main-blue);
+  color: var(--main-blue);
+}
+
+.button-main-blue:hover {
+  background-color: var(--main-blue);
+  color: white;
+}
+
+/* Typography utilities */
+.iowan {
+  font-family: 'Iowan Old Style', serif;
+}
+
+.iowan-black {
+  font-family: 'Iowan Old Style', serif;
+  color: black;
+}
+
+.font-geist {
+  font-family: var(--font-geist-sans);
 }

@@ -1,0 +1,21 @@
+/* Placeholder for original compiled CSS (0105b0e8fcdcf712.css)
+   Action required: Paste the full contents of the original bundle here to restore styles.
+
+   URL rewriting guidance (edit the pasted CSS after adding it):
+   - Rewrite font URLs to root-relative paths, e.g. url('/fonts/<name>.woff2')
+   - Rewrite image/icon URLs to root-relative paths, e.g. url('/images/<name>.svg')
+   - Keep import/order as in the original bundle.
+
+   Example (adjust after you paste real CSS):
+   @font-face {
+     font-family: 'Clash Grotesk';
+     src: url('/fonts/Clash-Grotesk/WEB/fonts/ClashGrotesk-Variable.woff2') format('woff2');
+     font-weight: 100 900;
+     font-style: normal;
+     font-display: swap;
+   }
+
+   .example-bg {
+     background-image: url('/images/black-google-logo.png');
+   }
+*/
