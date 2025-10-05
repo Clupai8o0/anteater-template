@@ -127,7 +127,7 @@ export default function HeroLogoRotator() {
         )}
         {/* Enter/current layer */}
         <div
-          className={`absolute inset-0 transition-all duration-[400ms] ease-in-out ${inView && !gateCurrent ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}
+          className={`absolute inset-0 transition-all duration-[400ms] ease-in-out ${inView && !gateCurrent && (!previous || prevPhase === 'exit') ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}
         >
           <Image src={current.src} alt={current.alt} width={96} height={96} className="h-24 w-auto" style={{filter:'brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(0) contrast(1)'}} />
         </div>
@@ -140,7 +140,7 @@ export default function HeroLogoRotator() {
             <span className="text-6xl font-bold" style={{fontFamily:'Iowan Old Style, serif', color:'black'}}>{previous.name}</span>
           </div>
         )}
-        <div className={`absolute inset-0 transition-all duration-[400ms] ease-in-out ${inView && !gateCurrent ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
+        <div className={`absolute inset-0 transition-all duration-[400ms] ease-in-out ${inView && !gateCurrent && (!previous || prevPhase === 'exit') ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
           <span className="text-6xl font-bold" style={{fontFamily:'Iowan Old Style, serif', color:'black'}}>{current.name}</span>
         </div>
       </div>
