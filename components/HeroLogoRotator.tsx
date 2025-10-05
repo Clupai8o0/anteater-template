@@ -16,6 +16,7 @@ const ITEMS: Item[] = [
 
 const DURATION_MS = 400; // match CSS in original snippet
 const INTERVAL_MS = 2600; // time between switches
+const ENTER_DELAY_MS = 420; // tiny delay so previous starts exiting before next enters
 
 export default function HeroLogoRotator() {
   const [index, setIndex] = useState(0);
@@ -24,8 +25,10 @@ export default function HeroLogoRotator() {
   const [hovering, setHovering] = useState(false);
   const [prevPhase, setPrevPhase] = useState<"idle" | "enter" | "exit">("idle");
   const [overlayOn, setOverlayOn] = useState(false);
+  const [gateCurrent, setGateCurrent] = useState(false);
   const rdt = useRef<ReturnType<typeof setTimeout> | null>(null);
   const rdi = useRef<ReturnType<typeof setInterval> | null>(null);
+  const gtt = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { ref, inView } = useInViewOnce<HTMLDivElement>();
 
   // respect reduced motion
@@ -41,6 +44,10 @@ export default function HeroLogoRotator() {
     // Next frame -> trigger exit transition for previous layer
     requestAnimationFrame(() => setPrevPhase("exit"));
     setOverlayOn(true);
+    // brief handoff: keep current hidden a moment so previous can start exiting
+    if (gtt.current) clearTimeout(gtt.current);
+    setGateCurrent(true);
+    gtt.current = setTimeout(() => setGateCurrent(false), ENTER_DELAY_MS);
     if (rdt.current) clearTimeout(rdt.current);
     rdt.current = setTimeout(() => { setPrev(null); setPrevPhase("idle"); setOverlayOn(false); }, DURATION_MS);
   };
@@ -62,7 +69,7 @@ export default function HeroLogoRotator() {
     };
   }, [index, paused, hovering, inView]);
 
-  useEffect(() => () => { if (rdt.current) clearTimeout(rdt.current); }, []);
+  useEffect(() => () => { if (rdt.current) clearTimeout(rdt.current); if (gtt.current) clearTimeout(gtt.current); }, []);
 
   const current = ITEMS[index];
   const previous = prev != null ? ITEMS[prev] : null;
@@ -120,7 +127,7 @@ export default function HeroLogoRotator() {
         )}
         {/* Enter/current layer */}
         <div
-          className={`absolute inset-0 transition-all duration-[400ms] ease-in-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}
+          className={`absolute inset-0 transition-all duration-[400ms] ease-in-out ${inView && !gateCurrent ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}
         >
           <Image src={current.src} alt={current.alt} width={96} height={96} className="h-24 w-auto" style={{filter:'brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(0) contrast(1)'}} />
         </div>
@@ -133,7 +140,7 @@ export default function HeroLogoRotator() {
             <span className="text-6xl font-bold" style={{fontFamily:'Iowan Old Style, serif', color:'black'}}>{previous.name}</span>
           </div>
         )}
-        <div className={`absolute inset-0 transition-all duration-[400ms] ease-in-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
+        <div className={`absolute inset-0 transition-all duration-[400ms] ease-in-out ${inView && !gateCurrent ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
           <span className="text-6xl font-bold" style={{fontFamily:'Iowan Old Style, serif', color:'black'}}>{current.name}</span>
         </div>
       </div>
