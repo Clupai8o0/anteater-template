@@ -1,11 +1,18 @@
 "use client";
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MobileMenu from './MobileMenu';
 import WaitlistDialog from './WaitlistDialog';
 
 export default function Header() {
   const [dialogOpen, setDialogOpen] = useState(false);
+  // Listen for a global event to open the dialog (e.g., from hero CTA)
+  useEffect(() => {
+    const handler = () => setDialogOpen(true);
+    // use 'as any' to bypass TS narrowing for custom events
+    window.addEventListener('open-waitlist' as any, handler as any);
+    return () => window.removeEventListener('open-waitlist' as any, handler as any);
+  }, []);
   return (
     <nav id="site-header" className="sticky top-0 z-70 transition-all duration-300 border-b border-gray-300 bg-[#F1F0E8]">
       <div className="max-w-7xl mx-auto px-4">

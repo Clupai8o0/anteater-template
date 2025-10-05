@@ -1,4 +1,7 @@
+"use client"
+
 import Image from 'next/image';
+import HeroLogoRotator from './HeroLogoRotator';
 
 export default function HeroSection() {
   return (
@@ -21,23 +24,7 @@ export default function HeroSection() {
             Get your products recommended by
           </h1>
           
-          <div className="-mt-4 mb-4 flex justify-center items-center gap-4 h-40">
-            <div className="transition-all duration-[400ms] ease-in-out opacity-0 transform -translate-y-4">
-              <Image 
-                src="/OpenAI.svg" 
-                alt="ChatGPT logo" 
-                width={96}
-                height={96}
-                className="h-24 w-auto" 
-                style={{filter:'brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(0) contrast(1)'}}
-              />
-            </div>
-            <div className="transition-all duration-[400ms] ease-in-out opacity-0 transform -translate-y-4">
-              <span className="text-6xl font-bold" style={{fontFamily:'Iowan Old Style, serif', color:'black'}}>
-                ChatGPT
-              </span>
-            </div>
-          </div>
+          <HeroLogoRotator />
           
           <p className="-mt-2 text-[15px] sm:text-lg text-gray-600 leading-relaxed max-w-[500px] mx-auto" style={{fontFamily:'Geist Mono, monospace'}}>
             Reach millions of shoppers already relying on AI for recommendations.
@@ -52,6 +39,7 @@ export default function HeroSection() {
               aria-haspopup="dialog" 
               aria-expanded="false"
               data-state="closed"
+              onClick={() => window.dispatchEvent(new Event('open-waitlist'))}
             >
               <span className="relative z-10">Join Waitlist</span>
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-right ml-2 w-5 h-5" aria-hidden="true">
